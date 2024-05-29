@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Todo App</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="content">
+    <form [formGroup]="form" (ngSubmit)="addTodo()">
+        <mat-divider></mat-divider>
+        <mat-form-field>
+            <mat-label> Task: </mat-label>
+            <input matInput placeholder="Add ToDo" formControlName="task">
+        </mat-form-field>
+        <div *ngIf="form.get('task')?.hasError('minlength')">Task name cannot be shorter than 5 characters</div>
+        <div *ngIf="form.get('task')?.hasError('required')">Please enter a name for the task</div>
+        <div *ngIf="form.get('task')?.hasError('atleastfivechars')">Name must consist of at least 5 characters</div>
+        
+        <div>
+            <mat-label>Priority: </mat-label>
+            <mat-radio-group arial-lable="Select an Option" formControlName="priority">
+                <mat-radio-button *ngFor="let p of priorities" value="{{p}}">{{p}}</mat-radio-button>
+            </mat-radio-group>
+                <!-- Using ng-template-->
+                <!-- <mat-radio-group arial-label="Select an Option" formControlName="priority">
+                <div *ngFor="let p of priorities">
+                    <div *ngIf="p == 'Low'; else ebut">
+                        <mat-radio-button value="{{p}}" checked>{{p}}</mat-radio-button> 
+                    </div>
+                    <ng-template #ebut>
+                        <mat-radio-button value="{{p}}">{{p}}</mat-radio-button> 
+                    </ng-template>
+                </div>
+                </mat-radio-group> -->            
+        </div>
+        <div *ngIf="form.get('priority')?.hasError('required')">Priority cannot be empty, default set to Low</div>
+        <div>
+            <button mat-raised-button color="primary" 
+                *ngIf="!editMode" type="submit" [disabled]="form.invalid">Add</button>
+        </div>
+        <ng-content></ng-content>
+    </form>
+</div>
+
+
