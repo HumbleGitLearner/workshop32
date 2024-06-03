@@ -10,7 +10,7 @@ import { Todo } from '../models/todo';
 export class TaskListComponent {
 
   @Input()
-  list: Todo[]=[];
+  list: Todo[]=[]; 
   @Output()
   editTodo = new EventEmitter<Todo>();
 
@@ -20,6 +20,7 @@ export class TaskListComponent {
   }
 
   edit(t:Todo){
+    console.log("Task-list: ", t);
     this.editTodo.emit(t);
   }
 

@@ -1,10 +1,12 @@
 <!-- list of todos -->
 <div>
     <mat-list>
-        <mat-list-item *ngFor="let item of list; let idx=index; track idx">
+        <mat-list-item *ngFor="let item of list; let idex=index">
+        <!-- <mat-list-item *ngFor="let item of list; let idx=index; track idx"> -->
             <mat-checkbox (change)="toggleComplete(item)"
-                [checked]="item.status">
-                {{item.task}}, {{item.taskId}} 
+                [checked]="item.completed">
+                {{item.task|titlecase}}, {{item.priority}},  
+                {{item.dueDate|date:'yyyy-MM--dd'}}, {{item.taskId}}
             </mat-checkbox> 
             &nbsp;
             <button mat-icon-button (click)="edit(item)">

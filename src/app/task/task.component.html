@@ -1,25 +1,41 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    <mat-toolbar-row>  
         <span>Todo App</span>
-    </mat-toolbar-row>
+    </mat-toolbar-row> 
 </mat-toolbar>
+<!-- <h4>{{currentTodo.task}}</h4> -->
 
-<div class="content">
+<div class="content">   
     <form [formGroup]="form" (ngSubmit)="addTodo()">
-        <mat-divider></mat-divider>
-        <mat-form-field>
-            <mat-label> Task: </mat-label>
-            <input matInput placeholder="Add ToDo" formControlName="task">
-        </mat-form-field>
+ <!-- <mat-divider></mat-divider>
+        <mat-form-field>      
+            <mat-label> Task: </mat-label> 
+            <input matInput placeholder="Add ToDo" id="task" name="task"
+                    formControlName="task"> 
+            <input matInput placeholder="Add ToDo" [value]="currentTodo.task" formControlName="task">
+        </mat-form-field> -->
+        <label for="task">Task</label>
+        <input type="text" id ="task" placeholder="{{currentTodo.task}}" 
+           formControlName="task"><br>
+
         <div *ngIf="form.get('task')?.hasError('minlength')">Task name cannot be shorter than 5 characters</div>
         <div *ngIf="form.get('task')?.hasError('required')">Please enter a name for the task</div>
         <div *ngIf="form.get('task')?.hasError('atleastfivechars')">Name must consist of at least 5 characters</div>
         
         <div>
+            <h4>Priority:{{currentTodo.priority}} </h4>            
+            <label for="low">Low</label>
+            <input type="radio" name="priority"  id="low" value="Low" formControlName="priority" checked>
+            <label for="medium">Medium</label>
+            <input type="radio" name="priority"  id="medium" value="Medium" formControlName="priority" >
+            <label for="high">High</label>
+            <input type="radio" name="priority"  id="high" value="High" formControlName="priority" >
+        </div>
+        <!-- <div>
             <mat-label>Priority: </mat-label>
-            <mat-radio-group arial-lable="Select an Option" formControlName="priority">
+            <mat-radio-group aria-label="Select an Option" id="priority" name="priority" formControlName="priority">
                 <mat-radio-button *ngFor="let p of priorities" value="{{p}}">{{p}}</mat-radio-button>
-            </mat-radio-group>
+            </mat-radio-group> -->
                 <!-- Using ng-template-->
                 <!-- <mat-radio-group arial-label="Select an Option" formControlName="priority">
                 <div *ngFor="let p of priorities">
@@ -30,14 +46,50 @@
                         <mat-radio-button value="{{p}}">{{p}}</mat-radio-button> 
                     </ng-template>
                 </div>
-                </mat-radio-group> -->            
-        </div>
-        <div *ngIf="form.get('priority')?.hasError('required')">Priority cannot be empty, default set to Low</div>
+                </mat-radio-group>         
+        </div>-->     
+        <div *ngIf="form.get('priority')?.hasError('required')">Priority cannot be empty, by default set to Low</div>
+        
+        <label for="due">Due:   </label>
+        <input type="date" id="due" name="due" value="{{currentTodo.dueDate|date:'MMM d'}}" formControlName="due">
+        {{currentTodo.dueDate|date:'yyyy-MM--dd'}}<br>
+        <!-- <mat-form-field>
+            <mat-label> Due: </mat-label>
+            <input matInput type ="date" id ="due" placeholder="When is the task due?" name="due" formControlName="due">
+         </mat-form-field> -->
+        <div *ngIf="form.get('due')?.hasError('lessThanToday')">Due date cannot be before today</div>
+ 
+        <label for="completed"> completed: </label>
+        <input type="checkbox" id="completed" name="completed" formControlName="completed">         
+        {{currentTodo.completed}} <br>    
+   
+        <!-- <mat-form-field>      
+            <mat-label> completed: </mat-label>
+             <input matInput type="text" hidden aria-label="completed">
+            <mat-checkbox id="completed" name="completed" formControlName="completed"></mat-checkbox>
+        </mat-form-field> -->
+                <!--     </table>
+                <label for="completed">completed</label>
+                <select id="completed">
+                    <option value="unstarted">not started</option>
+                    <option value="in-progress">in progress</option>
+                    <option value="completed">completed</option>
+                    <option value="cancelled">cancelled</option>
+                </select> -->
+                <!-- </td>
+            </tr>  
+        </table> -->
         <div>
             <button mat-raised-button color="primary" 
                 *ngIf="!editMode" type="submit" [disabled]="form.invalid">Add</button>
-        </div>
-        <ng-content></ng-content>
+            <button mat-raised-button color="primary" 
+                *ngIf="editMode" type="button" (click)="updateTodo()">Update</button>
+            <button mat-raised-button color="primary" 
+                *ngIf="editMode" type="button" (click)="deleteTodo()">Delete</button>
+            <button mat-raised-button color="primary" 
+                *ngIf="editMode" type="button" (click)="cancelUpdateTodo()">Cancel</button>
+
+        </div>        
     </form>
 </div>
 

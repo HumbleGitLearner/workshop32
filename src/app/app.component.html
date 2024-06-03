@@ -1,11 +1,21 @@
 <h1>{{title}}</h1>
 
 <mat-label>Task Idx: {{editElemIdx}}</mat-label>
-<app-task [currentTodo]="itemList[editElemIdx]"
-    (onSubmit)="itemSubmit($event)">
+
+<div *ngIf="editElemIdx < 0 ; else editing">
+    <app-task [editMode]=false
+        (onSubmit)="addItem($event)"></app-task>
+</div>
+<ng-template #editing>
+    <app-task [editMode]=true [currentTodo]="itemList[editElemIdx]"
+     (onEdit) ="updateItem($event)"
+    (onDelete)="deleteItem($event)"
+    (onCancelUpdate) ="cancelUpdate($event)" >
 </app-task>
+
+</ng-template>
 
 <mat-divider></mat-divider>
 <app-task-list [list]="itemList"
-        (editTodo)="itemEdit($event)"></app-task-list>
+        (editTodo)="toEditItem($event)"></app-task-list>
 <!-- <router-outlet></router-outlet> -->
