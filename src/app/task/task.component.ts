@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { atLeastFiveChars, lessThanToday } from '../utils/custom-validators';
 import { Todo } from '../models/todo';
-import { formatDate } from '../utils/utilities'
+import { atLeastFiveChars, lessThanToday } from '../utils/custom-validators';
+import { formatDate } from '../utils/utilities';
 
 import { Subject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,10 +32,6 @@ export class TaskComponent implements OnInit, OnChanges{
 
  
   constructor(private fb: FormBuilder){
- 
-  }
-  
-  ngOnInit(): void {
     this.form= this.fb.group({
       // task: this.fb.control<string>('', [Validators.required, Validators.minLength(5)]),
       // task:['', [Validators.required, atLeastFiveChars]],
@@ -44,14 +40,15 @@ export class TaskComponent implements OnInit, OnChanges{
      due:[new Date(), [Validators.required, lessThanToday]],
      completed:[false] //removed this validators
     });
+    console.log('task.component:::Exit--constructor---constructor---constructor---constructor---') 
+  }
+  
+  ngOnInit(): void {
+    console.log('task.component---Init---Init---Init---Init---Init---Init---Init')
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    setTimeout(() => {
-      console.log('sssssssssssssssssssssssssssssssssssssssssssss')
-    }, 3000);
-if (this.editMode){     console.log('ttttttttttttttttttttttttttt')
-}
+    console.log('task.component:::Enter--ngOnChanges---ngOnChanges---ngOnChanges---ngOnChanges---')
     if (this.editMode && this.form){
       console.log('ngOnChanges: ', this.currentTodo.task)
       console.log('ngOnChanges: ', this.currentTodo.priority)
