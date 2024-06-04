@@ -15,8 +15,7 @@
             <input matInput placeholder="Add ToDo" [value]="currentTodo.task" formControlName="task">
         </mat-form-field> -->
         <label for="task">Task</label>
-        <input type="text" id ="task" placeholder="{{currentTodo.task}}" 
-           formControlName="task"><br>
+        <input type="text" id ="task" placeholder="Add Todo" formControlName="task"><br>
 
         <div *ngIf="form.get('task')?.hasError('minlength')">Task name cannot be shorter than 5 characters</div>
         <div *ngIf="form.get('task')?.hasError('required')">Please enter a name for the task</div>

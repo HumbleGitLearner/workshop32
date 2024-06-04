@@ -32,6 +32,7 @@ export class TaskComponent implements OnInit, OnChanges{
 
  
   constructor(private fb: FormBuilder){
+ 
   }
   
   ngOnInit(): void {
@@ -42,11 +43,16 @@ export class TaskComponent implements OnInit, OnChanges{
      priority:['Low',Validators.required], 
      due:[new Date(), [Validators.required, lessThanToday]],
      completed:[false] //removed this validators
-    })
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.editMode){
+    setTimeout(() => {
+      console.log('sssssssssssssssssssssssssssssssssssssssssssss')
+    }, 3000);
+if (this.editMode){     console.log('ttttttttttttttttttttttttttt')
+}
+    if (this.editMode && this.form){
       console.log('ngOnChanges: ', this.currentTodo.task)
       console.log('ngOnChanges: ', this.currentTodo.priority)
       console.log('ngOnChanges: ', this.currentTodo.dueDate)
@@ -54,12 +60,11 @@ export class TaskComponent implements OnInit, OnChanges{
       console.log('ngOnChanges: ', this.currentTodo.taskId)
       // console.log('ngOnChanges: ',changes['currentTodo'].currentValue.task);
       // console.log('ngOnChanges: ',changes['currentTodo'].currentValue.priority);
-      //put ? after form
-      this.form?.get("task")?.setValue(this.currentTodo.task);
+      this.form.get("task")?.setValue(this.currentTodo.task);
       //this.form.get('task')?.setValue(changes['currentTodo'].currentValue.task);  
-      this.form?.get("priority")?.setValue(changes['currentTodo'].currentValue.priority);
-      this.form?.get("due")?.setValue(this.currentTodo.dueDate);
-      this.form?.get("completed")?.setValue(this.currentTodo.completed);  
+      this.form.get("priority")?.setValue(changes['currentTodo'].currentValue.priority);
+      this.form.get("due")?.setValue(this.currentTodo.dueDate);
+      this.form.get("completed")?.setValue(this.currentTodo.completed);  
     } //skipping after the item has been chanaged, ediMode=false
   }
 
@@ -81,7 +86,7 @@ export class TaskComponent implements OnInit, OnChanges{
     setTimeout(() => {
       this.form.reset();
       this.editMode = false;
-    }, 50); // Adjust the timeout duration as needed to ensure tasks are completed
+    }, 500); // Adjust the timeout duration as needed to ensure tasks are completed
   }
 
   updateTodo(){
@@ -102,7 +107,7 @@ export class TaskComponent implements OnInit, OnChanges{
       this.editMode = false;
     //  this.currentTodo.task ='';
       this.currentTodo = new Todo('', 'Low', new Date(), '', false);
-    }, 50); // Adjust the timeout duration as needed to ensure tasks are completed
+    }, 500); // Adjust the timeout duration as needed to ensure tasks are completed
 
    }
 
@@ -113,7 +118,7 @@ export class TaskComponent implements OnInit, OnChanges{
       this.form.reset();
       this.editMode = false;
       this.currentTodo = new Todo('', 'Low', new Date(), '', false);
-    }, 20)
+    }, 500)
   }
 
   cancelUpdateTodo(){
@@ -123,6 +128,6 @@ export class TaskComponent implements OnInit, OnChanges{
       this.form.reset();
       this.editMode = false;
       this.currentTodo = new Todo('', 'Low', new Date(), '', false);
-    }, 20)
+    }, 500)
   }
 }

@@ -7,7 +7,7 @@ export class Todo{
         public completed?: boolean
     ){
     }
-
+ 
     toString(): string{
         return ("ToDo Task:[name: "+ this.task +", "
                 +"priority: "+this.priority+ ", "
